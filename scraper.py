@@ -4,18 +4,28 @@ from selenium.webdriver import ChromeOptions
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 import pandas as pd
-import mysql.connector
+# import mysql.connector
 from time import sleep
 from all_decorators import with_open_and_close_driver
+from driverFactory import driverFactory
+
+import pandas as pd
+
+driverfactory=driverFactory()
+chrome_options_dict = {
+    "start-maximized": True,  # Use None for options without values
+    "detach": True
+}
+chrome=driverFactory(options=chrome_options_dict).create_driver(driver_type="chrome")
+driverFactory.add_driver(new_driver={"brave":"hahohi"})
+print(driverFactory.get_driver_values())
 
 class Scraper:
-    def __init__(self, url):
+    def __init__(self, url, context):
         self.name="Scrape Data from website"
         self.url=url
-        self.chrome_options=ChromeOptions()
-        self.chrome_options.add_experimental_option("detach", True)
-        self.driver=webdriver.Chrome(options=self.chrome_options)
-        
+        self.driver=chrome
+        self.context=context
         
     def get_website(self):
         self.driver.maximize_window()
@@ -40,11 +50,31 @@ class Scraper:
             
             # extract names
             names_list=self.driver.find_elements(By.XPATH, "//td[@class='stats-table__name']")
-            names_list_values=[name.test for name in names_list]
+            names_list_values=[name.text for name in names_list]
             print(names_list_values)
             
+            # exctract stats
+            stats_list=self.driver.find_elements(By.XPATH, "//td[@class='stats-table__main-stat']")
+            stats_list_values=[int(name.text) for name in stats_list]
+            print(stats_list_values)
+            
+            data={
+                "rank": rank_values_list,
+                "player_name": names_list_values,
+                "goals": stats_list_values
+            }
+            return data
         except Exception as e:
             print("Error when extracting data", e)
+            
+    
+    def export_data_to_excel(self, data):
+        try:
+            df= pd.DataFrame(data=data)
+            df.to_excel("players_data.xlsx", index=False)
+            print("Data Exported successfuly")
+        except Exception as e:
+            print(f"error in export data to excel: {e}")
     
     @with_open_and_close_driver    
     def main(self):
@@ -52,5 +82,9 @@ class Scraper:
         self.get_website()
         
         # extract data
-        self.extract_data()
+        data = self.extract_data()
+        
+        # export data
+        # self.export_data_to_excel(data=data)
+        self.context.data=data
         
