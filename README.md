@@ -1,4 +1,6 @@
 ﻿# data_scrapping_pl_google_big_query
-- In this Project i've create a simple ETL, I scraped Data from Premier League website in python using the library selenium, then i made some transformations to the extracted data using pandas and numpy and finally I loaded this Data to Google BigQuery Database.
-- in The next version of this project i'll create the same ETL pipline using Apache Airflow, and BigQueryOperator.
+ 
+In this project, I have implemented a straightforward ETL (Extract, Transform, Load) process. I used Python, along with the Selenium library, to scrape data from the Premier League website. After extracting the data, I performed various transformations using Pandas and NumPy. Finally, I loaded the transformed data into a Google BigQuery database.
+
+For the next version of this project, I plan to enhance the ETL pipeline by utilizing Apache Airflow and the BigQueryOperator to automate and streamline the data extraction, transformation, and loading processes.
  
