@@ -5,5 +5,8 @@ In this project, I have implemented a straightforward ETL (Extract, Transform, L
 For the next version of this project, I plan to enhance the ETL pipeline by utilizing Apache Airflow and the BigQueryOperator to automate and streamline the data extraction, transformation, and loading processes.
 
 Bellow you find the result of this ETL Pipline.
- 
+
 ![image](https://github.com/hamza99-elback/data_scrapping_pl/assets/61594804/863c317b-935a-474d-b5c6-6306b64a405a)
+
+LINKS: https://www.premierleague.com/stats/top/players/goals
+![image](https://github.com/hamza99-elback/data_scrapping_pl/assets/61594804/180c0dc2-1211-4478-8e4d-7b4b968d8d69)
